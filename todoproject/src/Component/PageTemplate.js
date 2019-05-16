@@ -9,8 +9,7 @@ const Header = styled.header``;
 class PageTemplate extends Component {
   state = {
     inputTerm: "",
-    addTerm: "",
-    todos: [{ id: 0, text: "투두만들기", done: true }]
+    toDos: []
   };
 
   handleChange = event => {
@@ -24,18 +23,20 @@ class PageTemplate extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { inputTerm } = this.state;
+    const { inputTerm, toDos } = this.state;
 
     if (inputTerm !== "") {
+      const newTodo = { id: toDos.length, text: inputTerm, done: false };
+      toDos.push(newTodo);
       // add as todo item
       this.setState({ inputTerm: "" }); // after inputting make input empty
-      this.setState({ addTerm: inputTerm });
+      this.setState({ toDos });
     }
   };
 
   render() {
-    const { inputTerm } = this.state;
-
+    const { inputTerm, toDos } = this.state;
+    console.log(toDos);
     return (
       <>
         <Header>
@@ -46,7 +47,7 @@ class PageTemplate extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-        {/* <TodoList /> */}
+        <TodoList toDos={toDos} />
       </>
     );
   }

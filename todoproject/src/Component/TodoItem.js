@@ -17,7 +17,7 @@ const todoItem = ({ toDo, handleDelete }) => (
       <Text>{toDo.text}</Text>
     </div>
     <div>
-      <Delete onClick={handleDelete(toDo)}>[삭제]</Delete>
+      <Delete onClick={() => handleDelete(toDo)}>[삭제]</Delete>
       {/* give toDo to PageTemplate */}
     </div>
   </Container>

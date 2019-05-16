@@ -11,6 +11,27 @@ class PageTemplate extends Component {
     toDos: []
   };
 
+  getId = () => {
+    // make new ID
+    const { toDos } = this.state;
+
+    if (toDos.length === 0) {
+      return 1;
+    }
+    console.log(toDos);
+
+    let maxId = 0;
+
+    toDos.forEach(todo => {
+      console.log(todo);
+      if (todo.id >= maxId) {
+        maxId = todo.id;
+        console.log("max : " + maxId);
+      }
+    });
+    return maxId + 1;
+  };
+
   handleChange = event => {
     const {
       target: { value }
@@ -19,13 +40,15 @@ class PageTemplate extends Component {
     this.setState({ inputTerm: value });
   };
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
     const { inputTerm, toDos } = this.state;
 
-    if (inputTerm !== "") {
-      const newTodo = { id: toDos.length, text: inputTerm, done: false };
+    const newId = this.getId();
+
+    if (inputTerm !== "" && (await newId)) {
+      const newTodo = { id: newId, text: inputTerm, done: false };
       toDos.push(newTodo);
       // add as todo item
       this.setState({ inputTerm: "" }); // after inputting make input empty
@@ -35,11 +58,24 @@ class PageTemplate extends Component {
 
   handleDelete = todo => {
     const { toDos } = this.state;
+    //console.log(todo);
+
+    const index = toDos.findIndex(potato => potato.id === todo.id);
+
+    const newToDos = [
+      ...toDos.slice(0, index),
+      ...toDos.slice(index + 1, toDos.length)
+    ];
+
+    console.log((todo = " has deleted! "));
+    //console.log(newToDos);
+
+    this.setState({ toDos: newToDos });
   };
 
   render() {
     const { inputTerm, toDos } = this.state;
-    //console.log(toDos);
+
     return (
       <>
         <Header>

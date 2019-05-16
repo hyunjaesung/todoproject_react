@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
-import TodoItem from "./TodoItem";
 
 const Header = styled.header``;
 
@@ -16,7 +15,7 @@ class PageTemplate extends Component {
     const {
       target: { value }
     } = event;
-    console.log(value);
+    // console.log(value);
     this.setState({ inputTerm: value });
   };
 
@@ -34,9 +33,13 @@ class PageTemplate extends Component {
     }
   };
 
+  handleDelete = todo => {
+    const { toDos } = this.state;
+  };
+
   render() {
     const { inputTerm, toDos } = this.state;
-    console.log(toDos);
+    //console.log(toDos);
     return (
       <>
         <Header>
@@ -47,7 +50,7 @@ class PageTemplate extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-        <TodoList toDos={toDos} />
+        <TodoList toDos={toDos} handleDelete={this.handleDelete} />
       </>
     );
   }
